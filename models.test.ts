@@ -16,8 +16,6 @@ test("Testeo el addOne del modelo", (t) => {
     id: 30,
     name: "Marce",
   };
-  console.log(model);
-  console.log(mockContact);
   model.addOne(mockContact);
   t.deepEqual(model.getAll(), [mockContact]);
 });
@@ -29,9 +27,7 @@ test("Testeo el save del modelo", (t) => {
     id: 30,
     name: "Marce",
   };
-  console.log(model);
   model.addOne(mockContact);
-  console.log(model);
   model.save();
   const fileContent = jsonfile.readFileSync("./contacts.json");
   t.deepEqual(fileContent, model.getAll());

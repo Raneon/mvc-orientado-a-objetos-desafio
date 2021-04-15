@@ -6,21 +6,23 @@ export class ContactsControllerOptions {
 }
 
 class ContactsController {
-  contacts: ContactsCollection;
+  contactsCollection: ContactsCollection;
   constructor() {
-    this.contacts = new ContactsCollection();
-    this.contacts.load();
+    this.contactsCollection = new ContactsCollection();
+    this.contactsCollection.load();
   }
 
   processOptions(options: ContactsControllerOptions) {
-    if (options.action == "save") {
-      this.contacts.addOne(options.params);
+    if (options.action == "save" && options.params) {
+      this.contactsCollection.addOne(options.params);
+      this.contactsCollection.save();
+      return this.contactsCollection;
     }
     if (options.action == "get" && options.params.id) {
-      return this.contacts.getOneById(options.params.id);
+      return this.contactsCollection.getOneById(options.params.id);
     }
     if (options.action == "get" && !options.params.id) {
-      return this.contacts.getAll();
+      return this.contactsCollection.getAll();
     }
   }
 }

@@ -1,19 +1,15 @@
 import * as fs from "fs";
 import * as _ from "lodash";
+import * as jsonfile from "jsonfile";
 class Contact {
   id: number;
   name: string;
 }
 
 class ContactsCollection {
-  data: object[];
-  constructor() {
-    this.data = [];
-  }
+  data: Contact[] = [];
   load() {
-    const dataJson = fs.readFileSync(__dirname + "/contacts.json").toString();
-    const contacts = JSON.parse(dataJson);
-    this.data = contacts;
+    this.data = jsonfile.readFileSync(__dirname + "/contacts.json");
   }
   getAll() {
     return this.data;
@@ -22,9 +18,7 @@ class ContactsCollection {
     this.data.push(contact);
   }
   save() {
-    const dataString = JSON.stringify(this.data);
-    console.log(dataString);
-    fs.writeFileSync(__dirname + "/contacts.json", dataString);
+    jsonfile.writeFileSync(__dirname + "/contacts.json", this.data);
   }
   getOneById(id) {
     return _.find(this.data, { id: id });
